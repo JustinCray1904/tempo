@@ -81,7 +81,7 @@ namespace EchoDeck
             _player.SetEqualizer(_equalizer);
             for (int i = 0; i < _sliders.Length; i++)
             {
-                float amp = _equalizer.GetAmp((uint)i);
+                float amp = _equalizer.Amp((uint)i); // <-- FIXED: Amp instead of GetAmp
                 _sliders[i].Value = amp;
                 _valueLabels[i].Text = $"{(amp > 0 ? "+" : "")}{amp:0.0} dB";
             }
@@ -101,7 +101,8 @@ namespace EchoDeck
             _valueLabels[band].Text = $"{(value > 0 ? "+" : "")}{value:0.0} dB";
             PresetCombo.SelectedIndex = 0;
 
-            _equalizer.SetAmp((uint)band, (float)value);
+            // FIXED: SetAmp takes (amp, band) not (band, amp)
+            _equalizer.SetAmp((float)value, (uint)band); 
             _player.SetEqualizer(_equalizer);
 
             if (LinkSlidersCheck.IsChecked == true)
@@ -117,18 +118,19 @@ namespace EchoDeck
         private void AdjustSlider(int index, double baseValue, int distance)
         {
             double target = baseValue * (1.0 - (distance * 0.3));
-            if (target > 20) target = 20; if (target < -20) target = -20;
+            if (target > 20) target = 20; 
+            if (target < -20) target = -20;
             _loading = true;
             _sliders[index].Value = target;
             _valueLabels[index].Text = $"{(target > 0 ? "+" : "")}{target:0.0} dB";
-            if (_equalizer != null) _equalizer.SetAmp((uint)index, (float)target);
+            _equalizer.SetAmp((float)target, (uint)index); // <-- FIXED
             _loading = false;
         }
 
         private void EqToggle_Click(object sender, RoutedEventArgs e)
         {
-            if (EqToggle.IsChecked == true) _player.SetEqualizer(_equalizer);
-            else _player.SetEqualizer(null);
+            // If the toggle is on, apply the equalizer. If off, disable it.
+            _player.SetEqualizer(EqToggle.IsChecked == true ? _equalizer : null);
         }
 
         private void Close_Click(object sender, RoutedEventArgs e) => Close();
