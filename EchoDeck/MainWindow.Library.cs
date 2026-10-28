@@ -680,17 +680,7 @@ private void SelectAddTo_Click(object sender, RoutedEventArgs e)
     if (selected.Count > 0) ShowPlaylistPicker(selected, null);
     ClearSelection_Click(sender, e);
 }
-private void ClearSelection_Click(object sender, RoutedEventArgs e)
-{
-    foreach (var entry in _visibleEntries) entry.IsChecked = false;
-    UpdateSelectionBar();
-}
-private void SelectAllCheck_Click(object sender, RoutedEventArgs e)
-{
-    bool check = SelectAllCheck.IsChecked == true;
-    foreach (var entry in _visibleEntries) entry.IsChecked = check;
-    UpdateSelectionBar();
-}
+
     private static void ShowInExplorer(string path)
     {
         try
