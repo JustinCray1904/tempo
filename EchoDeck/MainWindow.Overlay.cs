@@ -194,15 +194,16 @@ private void DetachFloatingBar()
         menu.IsOpen = true;
     }
 
-    private void FillEqualizerCombo()
+   private void FillEqualizerCombo()
+{
+    if (QEqCombo.Items.Count > 0) return;
+    try
     {
-        if (QEqCombo.Items.Count > 0) return;
-        try
-        {
-            for (uint i = 0; i < Equalizer.PresetCount; i++) QEqCombo.Items.Add(Equalizer.PresetName(i));
-        }
-        catch { /* equaliser unavailable */ }
+        var eq = new Equalizer();
+        for (uint i = 0; i < eq.PresetCount; i++) QEqCombo.Items.Add(eq.PresetName(i));
     }
+    catch { }
+}
 
     private void ApplyEqualizer(int preset)
     {

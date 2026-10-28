@@ -391,7 +391,36 @@ public partial class AnonymousPanelWindow : Window
         if (!_wiped) SetBusy(false);
     }
 }
+private async void RowDelete_Click(object sender, RoutedEventArgs e)
+{
+    if (_busy || (sender as FrameworkElement)?.DataContext is not VaultItem item) return;
 
+    if (_pendingDelete != item)
+    {
+        _pendingDelete = item;
+        StatusText.Text = "Click the bin again to permanently delete “" + item.Name + "”";
+        _confirmTimer.Stop();
+        _confirmTimer.Start();
+        return;
+    }
+
+    ResetDeleteConfirm();
+    var handler = DeleteHandler;
+    if (handler == null) return;
+
+    SetBusy(true);
+    StatusText.Text = "Deleting…";
+    try
+    {
+        var error = await handler(item);
+        await RefreshAsync();
+        if (!_wiped) StatusText.Text = error ?? "Deleted permanently";
+    }
+    finally
+    {
+        if (!_wiped) SetBusy(false);
+    }
+}
     private void ResetDeleteConfirm()
     {
         _confirmTimer.Stop();

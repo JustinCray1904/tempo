@@ -901,7 +901,7 @@ private void QuickClose_Click(object sender, RoutedEventArgs e) => QuickPopup.Is
                 return;
           
 case nameof(QEqCombo):
-    var eqWin = new EqualizerWindow(_player) { Owner = this };
+    var eqWin = new EqualizerWindow(_player, _equalizer) { Owner = this };
     eqWin.ShowDialog();
     RefreshQuick();
     return;

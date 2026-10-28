@@ -30,7 +30,7 @@ public partial class PropertiesWindow : Window
                 PropGenre.Text = tag.Tag.Genres.Length > 0 ? string.Join(", ", tag.Tag.Genres) : "Unknown Genre";
                 PropYear.Text = tag.Tag.Year.ToString();
                 PropLength.Text = tag.Properties.Duration.ToString(@"hh\:mm\:ss");
-                if (tag.Properties.MediaTypes.HasFlag(MediaTypes.Video))
+             if (tag.Properties.MediaTypes.HasFlag(TagLib.MediaTypes.Video))
                 {
                     PropResolution.Text = $"{tag.Properties.VideoWidth} × {tag.Properties.VideoHeight}";
                 }
