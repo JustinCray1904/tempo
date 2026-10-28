@@ -363,7 +363,7 @@
         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
             <CheckBox x:Name="SelectAllCheck" Style="{StaticResource SelectionCheckbox}" Margin="0,0,12,0" Click="SelectAllCheck_Click"/>
             <TextBlock x:Name="SelectionCountText" Text="0 items selected" FontSize="14" FontWeight="SemiBold" Foreground="{DynamicResource TextBrush}" VerticalAlignment="Center" Margin="0,0,16,0"/>
-            <Button Content="Clear" Style="{StaticResource FigmaIconButton}" Click="ClearSelection_Click">
+            <Button ToolTip="Clear" Style="{StaticResource FigmaIconButton}" Click="ClearSelection_Click">
                 <Path Style="{StaticResource Ico}" Data="{StaticResource IcoClose}"/>
             </Button>
         </StackPanel>
